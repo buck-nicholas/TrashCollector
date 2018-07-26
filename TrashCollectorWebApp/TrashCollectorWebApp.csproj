@@ -207,6 +207,14 @@
     <Compile Include="Migrations\201807261555469_MigInit.Designer.cs">
       <DependentUpon>201807261555469_MigInit.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201807261638480_MigInit1.cs" />
+    <Compile Include="Migrations\201807261638480_MigInit1.Designer.cs">
+      <DependentUpon>201807261638480_MigInit1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201807261640019_MigWithRoles.cs" />
+    <Compile Include="Migrations\201807261640019_MigWithRoles.Designer.cs">
+      <DependentUpon>201807261640019_MigWithRoles.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Customer.cs" />
@@ -305,6 +313,12 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201807261555469_MigInit.resx">
       <DependentUpon>201807261555469_MigInit.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201807261638480_MigInit1.resx">
+      <DependentUpon>201807261638480_MigInit1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201807261640019_MigWithRoles.resx">
+      <DependentUpon>201807261640019_MigWithRoles.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
