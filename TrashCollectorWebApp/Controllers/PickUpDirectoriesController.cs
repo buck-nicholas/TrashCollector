@@ -20,9 +20,19 @@ namespace TrashCollectorWebApp.Controllers
         public ActionResult Index()
         {
             string userId = User.Identity.GetUserId();
-            Customer currentCustomer = db.Customers.Where(x => x.UserId == userId).Select(x => x).FirstOrDefault();
-            var pickUpDirectories = db.PickUpDirectories.Where(x => x.CustomerID == currentCustomer.ID);
-            return View(pickUpDirectories.ToList());
+            if (User.IsInRole("Customer"))
+            {
+                Customer currentCustomer = db.Customers.Where(x => x.UserId == userId).Select(x => x).FirstOrDefault();
+                var pickUpDirectories = db.PickUpDirectories.Where(x => x.CustomerID == currentCustomer.ID);
+                return View(pickUpDirectories.ToList());
+            }
+            else if (User.IsInRole("Employee"))
+            {
+                Employee currentEmployee = db.Employees.Where(x => x.UserId == userId).Select(x => x).FirstOrDefault();
+                var pickUpDirectories = db.PickUpDirectories.Where(x => x.Customer.ZipCode == currentEmployee.AssignedZip);
+                return View(pickUpDirectories.ToList());
+            }
+            return RedirectToAction("Index", "Home");
         }
 
         // GET: PickUpDirectories/Details/5

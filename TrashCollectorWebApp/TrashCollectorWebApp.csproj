@@ -224,6 +224,10 @@
     <Compile Include="Migrations\201807271540112_ForcingDataInputForUserInfoOnRegister.Designer.cs">
       <DependentUpon>201807271540112_ForcingDataInputForUserInfoOnRegister.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201807271644178_AddedAssignedZipCodeToEmployee.cs" />
+    <Compile Include="Migrations\201807271644178_AddedAssignedZipCodeToEmployee.Designer.cs">
+      <DependentUpon>201807271644178_AddedAssignedZipCodeToEmployee.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Customer.cs" />
@@ -340,6 +344,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201807271540112_ForcingDataInputForUserInfoOnRegister.resx">
       <DependentUpon>201807271540112_ForcingDataInputForUserInfoOnRegister.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201807271644178_AddedAssignedZipCodeToEmployee.resx">
+      <DependentUpon>201807271644178_AddedAssignedZipCodeToEmployee.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
