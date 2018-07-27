@@ -211,12 +211,17 @@
     <Compile Include="Migrations\201807262108078_AddedFKeyToEmployeeModel.Designer.cs">
       <DependentUpon>201807262108078_AddedFKeyToEmployeeModel.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201807271400553_PickUpTableAdded.cs" />
+    <Compile Include="Migrations\201807271400553_PickUpTableAdded.Designer.cs">
+      <DependentUpon>201807271400553_PickUpTableAdded.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\Employee.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\PickUpDirectory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -312,6 +317,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201807262108078_AddedFKeyToEmployeeModel.resx">
       <DependentUpon>201807262108078_AddedFKeyToEmployeeModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201807271400553_PickUpTableAdded.resx">
+      <DependentUpon>201807271400553_PickUpTableAdded.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
