@@ -203,17 +203,13 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201807261555469_MigInit.cs" />
-    <Compile Include="Migrations\201807261555469_MigInit.Designer.cs">
-      <DependentUpon>201807261555469_MigInit.cs</DependentUpon>
+    <Compile Include="Migrations\201807262103323_CleanMig.cs" />
+    <Compile Include="Migrations\201807262103323_CleanMig.Designer.cs">
+      <DependentUpon>201807262103323_CleanMig.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201807261638480_MigInit1.cs" />
-    <Compile Include="Migrations\201807261638480_MigInit1.Designer.cs">
-      <DependentUpon>201807261638480_MigInit1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201807261640019_MigWithRoles.cs" />
-    <Compile Include="Migrations\201807261640019_MigWithRoles.Designer.cs">
-      <DependentUpon>201807261640019_MigWithRoles.cs</DependentUpon>
+    <Compile Include="Migrations\201807262108078_AddedFKeyToEmployeeModel.cs" />
+    <Compile Include="Migrations\201807262108078_AddedFKeyToEmployeeModel.Designer.cs">
+      <DependentUpon>201807262108078_AddedFKeyToEmployeeModel.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -311,14 +307,11 @@
     <Content Include="Scripts\jquery-3.3.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201807261555469_MigInit.resx">
-      <DependentUpon>201807261555469_MigInit.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201807262103323_CleanMig.resx">
+      <DependentUpon>201807262103323_CleanMig.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201807261638480_MigInit1.resx">
-      <DependentUpon>201807261638480_MigInit1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201807261640019_MigWithRoles.resx">
-      <DependentUpon>201807261640019_MigWithRoles.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201807262108078_AddedFKeyToEmployeeModel.resx">
+      <DependentUpon>201807262108078_AddedFKeyToEmployeeModel.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

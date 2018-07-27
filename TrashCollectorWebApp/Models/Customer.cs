@@ -9,6 +9,7 @@ namespace TrashCollectorWebApp.Models
 {
     public class Customer
     {
+        
         [Key]
         public int ID { get; set; }
         public string FirstName { get; set; }
@@ -18,5 +19,8 @@ namespace TrashCollectorWebApp.Models
         public string City { get; set; }
         public string USState { get; set; }
         public int ZipCode { get; set; }
+        [ForeignKey("ApplicationUser")]
+        public string UserId { get; set; }
+        public ApplicationUser ApplicationUser { get; set; }
     }
 }

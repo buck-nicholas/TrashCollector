@@ -7,6 +7,8 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using TrashCollectorWebApp.Models;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
 
 namespace TrashCollectorWebApp.Controllers
 {
@@ -48,8 +50,10 @@ namespace TrashCollectorWebApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ID,FirstName,LastName")] Employee employee)
         {
+            string currentUserId = User.Identity.GetUserId();
             if (ModelState.IsValid)
             {
+                employee.UserId = currentUserId;
                 db.Employees.Add(employee);
                 db.SaveChanges();
                 return RedirectToAction("Index");
