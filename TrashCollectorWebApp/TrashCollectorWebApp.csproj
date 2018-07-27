@@ -200,6 +200,7 @@
     <Compile Include="Controllers\EmployeesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\PickUpDirectoriesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -214,6 +215,14 @@
     <Compile Include="Migrations\201807271400553_PickUpTableAdded.cs" />
     <Compile Include="Migrations\201807271400553_PickUpTableAdded.Designer.cs">
       <DependentUpon>201807271400553_PickUpTableAdded.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201807271502347_TestMig.cs" />
+    <Compile Include="Migrations\201807271502347_TestMig.Designer.cs">
+      <DependentUpon>201807271502347_TestMig.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201807271540112_ForcingDataInputForUserInfoOnRegister.cs" />
+    <Compile Include="Migrations\201807271540112_ForcingDataInputForUserInfoOnRegister.Designer.cs">
+      <DependentUpon>201807271540112_ForcingDataInputForUserInfoOnRegister.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -294,6 +303,11 @@
     <Content Include="Views\Employees\Details.cshtml" />
     <Content Include="Views\Employees\Edit.cshtml" />
     <Content Include="Views\Employees\Index.cshtml" />
+    <Content Include="Views\PickUpDirectories\Create.cshtml" />
+    <Content Include="Views\PickUpDirectories\Delete.cshtml" />
+    <Content Include="Views\PickUpDirectories\Details.cshtml" />
+    <Content Include="Views\PickUpDirectories\Edit.cshtml" />
+    <Content Include="Views\PickUpDirectories\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -320,6 +334,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201807271400553_PickUpTableAdded.resx">
       <DependentUpon>201807271400553_PickUpTableAdded.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201807271502347_TestMig.resx">
+      <DependentUpon>201807271502347_TestMig.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201807271540112_ForcingDataInputForUserInfoOnRegister.resx">
+      <DependentUpon>201807271540112_ForcingDataInputForUserInfoOnRegister.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

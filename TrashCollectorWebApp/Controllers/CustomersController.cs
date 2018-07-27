@@ -19,7 +19,14 @@ namespace TrashCollectorWebApp.Controllers
         // GET: Customers
         public ActionResult Index()
         {
-            return View(db.Customers.ToList());
+            string userID = User.Identity.GetUserId();
+            var currentUser = db.Customers.Where(x => x.UserId == userID).Select(x=>x).FirstOrDefault();
+            
+            //var requiredData =
+            //    (from x in db.Customers
+            //     where x.UserId == userID
+            //     select x).FirstOrDefault();
+            return View(currentUser);
         }
 
         // GET: Customers/Details/5

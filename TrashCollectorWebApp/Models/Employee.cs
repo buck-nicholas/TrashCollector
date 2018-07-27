@@ -11,7 +11,9 @@ namespace TrashCollectorWebApp.Models
     {
         [Key]
         public int ID { get; set; }
+        [Required]
         public string FirstName { get; set; }
+        [Required]
         public string LastName { get; set; }
         [ForeignKey("ApplicationUser")]
         public string UserId { get; set; }

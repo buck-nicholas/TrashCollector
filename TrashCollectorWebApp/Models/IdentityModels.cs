@@ -32,5 +32,7 @@ namespace TrashCollectorWebApp.Models
         {
             return new ApplicationDbContext();
         }
+
+        public System.Data.Entity.DbSet<TrashCollectorWebApp.Models.PickUpDirectory> PickUpDirectories { get; set; }
     }
 }

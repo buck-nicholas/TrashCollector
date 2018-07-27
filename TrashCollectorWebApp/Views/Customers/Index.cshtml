@@ -1,69 +1,17 @@
-﻿@model IEnumerable<TrashCollectorWebApp.Models.Customer>
+﻿@model TrashCollectorWebApp.Models.Customer
 
 @{
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h2>Customer Actions</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.FirstName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.LastName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.AddressLineOne)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.AddressLineTwo)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.City)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.USState)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ZipCode)
-        </th>
-        <th></th>
-    </tr>
+<!--Manage account settings-->
+@Html.ActionLink("Manage Account Settings", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+<!--Manage account info-->
+@Html.ActionLink("Manage Account Information", "Edit", new { Model.ID })
+<!--View Pick Ups-->
+@Html.ActionLink("View PickUps", "Index", "PickUpDirectories")
+<!--Set Pick Ups-->
+@Html.ActionLink("Set Pick Up Date", "Create", "PickUpDirectories")
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.FirstName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.LastName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.AddressLineOne)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.AddressLineTwo)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.City)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.USState)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ZipCode)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
-        </td>
-    </tr>
-}
-
-</table>
