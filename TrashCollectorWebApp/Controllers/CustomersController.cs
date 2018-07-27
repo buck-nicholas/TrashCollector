@@ -21,11 +21,6 @@ namespace TrashCollectorWebApp.Controllers
         {
             string userID = User.Identity.GetUserId();
             var currentUser = db.Customers.Where(x => x.UserId == userID).Select(x=>x).FirstOrDefault();
-            
-            //var requiredData =
-            //    (from x in db.Customers
-            //     where x.UserId == userID
-            //     select x).FirstOrDefault();
             return View(currentUser);
         }
 

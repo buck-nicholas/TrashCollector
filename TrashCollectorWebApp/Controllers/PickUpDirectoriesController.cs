@@ -29,8 +29,12 @@ namespace TrashCollectorWebApp.Controllers
             else if (User.IsInRole("Employee"))
             {
                 Employee currentEmployee = db.Employees.Where(x => x.UserId == userId).Select(x => x).FirstOrDefault();
-                var pickUpDirectories = db.PickUpDirectories.Where(x => x.Customer.ZipCode == currentEmployee.AssignedZip);
-                return View(pickUpDirectories.ToList());
+                var requiredData =
+                    from x in db.PickUpDirectories
+                    where x.Customer.ZipCode == currentEmployee.AssignedZip
+                    select x;
+                //var pickUpDirectories = db.PickUpDirectories.Where(x => x.Customer.ZipCode == currentEmployee.AssignedZip);
+                return View(requiredData.ToList());
             }
             return RedirectToAction("Index", "Home");
         }
