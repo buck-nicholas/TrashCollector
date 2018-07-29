@@ -34,5 +34,7 @@ namespace TrashCollectorWebApp.Models
         }
 
         public System.Data.Entity.DbSet<TrashCollectorWebApp.Models.PickUpDirectory> PickUpDirectories { get; set; }
+
+        public System.Data.Entity.DbSet<TrashCollectorWebApp.Models.Transaction> Transactions { get; set; }
     }
 }
