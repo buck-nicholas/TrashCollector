@@ -7,10 +7,12 @@
 <h2>Index</h2>
 
 <!--Manage account settings-->
-@Html.ActionLink("Manage Account Settings", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+@Html.ActionLink("Manage Account Settings", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" }) |
 <!--Manage account info-->
-@Html.ActionLink("Manage Account Information", "Edit", new { Model.ID })
+@Html.ActionLink("Manage Account Information", "Edit", new { Model.ID }) |
 <!--View Pick Ups-->
-@Html.ActionLink("View PickUps", "Index", "PickUpDirectories")
+@Html.ActionLink("View PickUps", "Index", "PickUpDirectories") |
 <!--Set Pick Ups-->
 @*@Html.ActionLink("Set Pick Up Date", "Create", "PickUpDirectories")*@
+<!--View Transactions-->
+@Html.ActionLink("View Pending Transactions", "Index", "Transactions")

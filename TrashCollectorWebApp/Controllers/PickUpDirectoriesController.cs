@@ -79,11 +79,11 @@ namespace TrashCollectorWebApp.Controllers
                 db.SaveChanges();
 
                 // Create Transaction
-                Transaction newTransaction = new Transaction();
-                newTransaction.CustomerID = pickUpDirectory.CustomerID;
-                newTransaction.Amount = (pickUpDirectory.SpecialPickUp) ? 50 : 25;
-                db.Transactions.Add(newTransaction);
-                db.SaveChanges();
+                //Transaction newTransaction = new Transaction();
+                //newTransaction.CustomerID = pickUpDirectory.CustomerID;
+                //newTransaction.Amount = (pickUpDirectory.SpecialPickUp) ? 50 : 25;
+                //db.Transactions.Add(newTransaction);
+                //db.SaveChanges();
 
                 return RedirectToAction("Index", "Customers");
             }
