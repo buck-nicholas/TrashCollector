@@ -22,21 +22,34 @@ namespace TrashCollectorWebApp.Controllers
             string userId = User.Identity.GetUserId();
             if (User.IsInRole("Customer"))
             {
-                Customer currentCustomer = db.Customers.Where(x => x.UserId == userId).Select(x => x).FirstOrDefault();
-                var pickUpDirectories = db.PickUpDirectories.Where(x => x.CustomerID == currentCustomer.ID);
-                return View(pickUpDirectories.ToList());
+                return RedirectToAction("ListCustomer"); 
             }
             else if (User.IsInRole("Employee"))
             {
-                Employee currentEmployee = db.Employees.Where(x => x.UserId == userId).Select(x => x).FirstOrDefault();
-                var requiredData =
-                    from x in db.PickUpDirectories
-                    where x.Customer.ZipCode == currentEmployee.AssignedZip
-                    select x;
-                //var pickUpDirectories = db.PickUpDirectories.Where(x => x.Customer.ZipCode == currentEmployee.AssignedZip);
-                return View(requiredData.ToList());
+                return RedirectToAction("ListEmployee");
             }
             return RedirectToAction("Index", "Home");
+        }
+        // GET: PickUpDirectories FOR Employee Role
+        public ViewResult ListEmployee(string day)
+        {
+            List<string> daysOfWeek = new List<string>() { "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday", "All" };
+            ViewBag.DaysOfWeek = new SelectList(daysOfWeek);
+            string userId = User.Identity.GetUserId();
+            Employee currentEmployee = db.Employees.Where(x => x.UserId == userId).Select(x => x).FirstOrDefault();
+            var pickUps = db.PickUpDirectories.Where(x => x.Customer.ZipCode == currentEmployee.AssignedZip).Include(t => t.Customer);
+            if (!string.IsNullOrEmpty(day))
+            {
+                pickUps = db.PickUpDirectories.Where(x => x.Customer.ZipCode == currentEmployee.AssignedZip && x.DayOfWeek.ToLower() == day.ToLower()).Include(t => t.Customer);
+            }
+            return View(pickUps.ToList());
+        }
+        public ActionResult ListCustomer()
+        {
+            string userId = User.Identity.GetUserId();
+            Customer currentCustomer = db.Customers.Where(x => x.UserId == userId).Select(x => x).FirstOrDefault();
+            var pickUpDirectories = db.PickUpDirectories.Where(x => x.CustomerID == currentCustomer.ID).Include(t => t.Customer);
+            return View(pickUpDirectories.ToList());
         }
 
         // GET: PickUpDirectories/Details/5
@@ -119,6 +132,11 @@ namespace TrashCollectorWebApp.Controllers
             {
                 db.Entry(pickUpDirectory).State = EntityState.Modified;
                 db.SaveChanges();
+                
+                if (pickUpDirectory.PickUpCompleted)
+                {
+                    return RedirectToAction("Create", "Transactions");
+                }
                 return RedirectToAction("Index");
             }
             ViewBag.CustomerID = new SelectList(db.Customers, "ID", "FirstName", pickUpDirectory.CustomerID);
