@@ -41,5 +41,14 @@
         </td>
     </tr>
 }
+    <tr>
+        <td>
+            @if (User.IsInRole("Customer"))
+            {
+                <label>Amount Owed: </label> @ViewBag.AmountOwed
+            }
+        </td>
+    </tr>
+    
 
 </table>

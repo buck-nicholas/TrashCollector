@@ -37,19 +37,31 @@ namespace TrashCollectorWebApp.Controllers
             ViewBag.DaysOfWeek = new SelectList(daysOfWeek);
             string userId = User.Identity.GetUserId();
             Employee currentEmployee = db.Employees.Where(x => x.UserId == userId).Select(x => x).FirstOrDefault();
-            var pickUps = db.PickUpDirectories.Where(x => x.Customer.ZipCode == currentEmployee.AssignedZip).Include(t => t.Customer);
+            var pickUps = db.PickUpDirectories.Where(x => x.Customer.ZipCode == currentEmployee.AssignedZip).Where(x => IsActiveDate(x) == true).Include(t => t.Customer);
             if (!string.IsNullOrEmpty(day))
             {
-                pickUps = db.PickUpDirectories.Where(x => x.Customer.ZipCode == currentEmployee.AssignedZip && x.DayOfWeek.ToLower() == day.ToLower()).Include(t => t.Customer);
+                pickUps = db.PickUpDirectories.Where(x => x.Customer.ZipCode == currentEmployee.AssignedZip && x.DayOfWeek.ToLower() == day.ToLower()).Where(x => IsActiveDate(x) == true).Include(t => t.Customer);
             }
             return View(pickUps.ToList());
         }
         public ActionResult ListCustomer()
         {
+            
             string userId = User.Identity.GetUserId();
             Customer currentCustomer = db.Customers.Where(x => x.UserId == userId).Select(x => x).FirstOrDefault();
-            var pickUpDirectories = db.PickUpDirectories.Where(x => x.CustomerID == currentCustomer.ID).Include(t => t.Customer);
+            var pickUpDirectories = db.PickUpDirectories.Where(x => x.CustomerID == currentCustomer.ID).Where(x => IsActiveDate(x) == true).Include(t => t.Customer);
             return View(pickUpDirectories.ToList());
+        }
+
+        public bool IsActiveDate(PickUpDirectory directory)
+        {
+            DateTime today = DateTime.Today;
+            string dtString = today.ToString("MM/dd/yyyy");
+            int[] dtFormatted = dtString.Split('/').Select(x => Int32.Parse(x)).ToArray();
+            int[] startDateDtFormatted = directory.StartDate.Split('/').Select(x => Int32.Parse(x)).ToArray();
+            int[] EndDateDtFormatted = directory.EndDate.Split('/').Select(x => Int32.Parse(x)).ToArray();
+            bool isActive = (dtFormatted[0] >= startDateDtFormatted[0] && dtFormatted[0] <= EndDateDtFormatted[0] && dtFormatted[1] >= startDateDtFormatted[1] && dtFormatted[1] <= EndDateDtFormatted[1] && dtFormatted[2] >= startDateDtFormatted[2] && dtFormatted[2] <= EndDateDtFormatted[2]) ? true : false;
+            return isActive;
         }
 
         // GET: PickUpDirectories/Details/5
@@ -81,7 +93,7 @@ namespace TrashCollectorWebApp.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,DayOfWeek,SpecialPickUp,SpecialDate,PickUpCompleted")] PickUpDirectory pickUpDirectory)
+        public ActionResult Create([Bind(Include = "ID,DayOfWeek,SpecialPickUp,SpecialDate,PickUpCompleted,StartDate,EndDate")] PickUpDirectory pickUpDirectory)
         {
             if (ModelState.IsValid)
             {

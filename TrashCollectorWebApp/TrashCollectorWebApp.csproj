@@ -237,6 +237,10 @@
     <Compile Include="Migrations\201807291748128_ChangedTransactionTableWithPickUpFK.Designer.cs">
       <DependentUpon>201807291748128_ChangedTransactionTableWithPickUpFK.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201807301241337_AddedStartAndEndDateToPickUpTable.cs" />
+    <Compile Include="Migrations\201807301241337_AddedStartAndEndDateToPickUpTable.Designer.cs">
+      <DependentUpon>201807301241337_AddedStartAndEndDateToPickUpTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Customer.cs" />
@@ -370,6 +374,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201807291748128_ChangedTransactionTableWithPickUpFK.resx">
       <DependentUpon>201807291748128_ChangedTransactionTableWithPickUpFK.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201807301241337_AddedStartAndEndDateToPickUpTable.resx">
+      <DependentUpon>201807301241337_AddedStartAndEndDateToPickUpTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -18,5 +18,7 @@ namespace TrashCollectorWebApp.Models
         [ForeignKey("Customer")]
         public int CustomerID { get; set; }
         public Customer Customer { get; set; }
+        public string StartDate { get; set; }
+        public string EndDate { get; set; }
     }
 }

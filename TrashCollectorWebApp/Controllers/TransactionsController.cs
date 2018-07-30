@@ -7,6 +7,8 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using TrashCollectorWebApp.Models;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
 
 namespace TrashCollectorWebApp.Controllers
 {
@@ -14,10 +16,22 @@ namespace TrashCollectorWebApp.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
+        public double AmountOwed()
+        {
+            string userId = User.Identity.GetUserId();
+            Customer currentCustomer = db.Customers.Where(x => x.UserId == userId).Select(x => x).FirstOrDefault();
+            var AmountOwed = db.Transactions.Where(x => x.PickUp.CustomerID == currentCustomer.ID && !x.TransactionCompleted).Select(x => x.Amount).Sum();
+            return AmountOwed;
+        }
+
         // GET: Transactions
         public ActionResult Index()
         {
             var transactions = db.Transactions.Include(t => t.PickUp);
+            if (User.IsInRole("Customer"))
+            {
+                ViewBag.AmountOwed = AmountOwed();
+            }
             return View(transactions.ToList());
         }
 
