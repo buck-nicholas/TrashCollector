@@ -331,3 +331,4 @@ ASALocalRun/
 
 # API
 SpecialAppSettings.config
+ApiKey.cs
