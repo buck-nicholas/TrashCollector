@@ -109,8 +109,15 @@ namespace TrashCollectorWebApp.Controllers
                 //newTransaction.Amount = (pickUpDirectory.SpecialPickUp) ? 50 : 25;
                 //db.Transactions.Add(newTransaction);
                 //db.SaveChanges();
-
-                return RedirectToAction("Index", "Customers");
+                if (User.IsInRole("Customer"))
+                {
+                    return RedirectToAction("Index", "Customers");
+                }
+                else if (User.IsInRole("Employee"))
+                {
+                    return RedirectToAction("Index", "Employees");
+                }
+                
             }
 
             ViewBag.CustomerID = new SelectList(db.Customers, "ID", "FirstName", pickUpDirectory.CustomerID);

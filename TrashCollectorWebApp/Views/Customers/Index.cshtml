@@ -17,6 +17,8 @@
 <!--View Transactions-->
 @Html.ActionLink("View Pending Transactions", "Index", "Transactions")
 
+@*@Html.Partial("MappedLocation", Model);*@
+@Html.ActionLink("View Map", "MappedLocation", new { Model.ID});
 
 
 

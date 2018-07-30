@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using TrashCollectorWebApp.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
+using GoogleMaps.LocationServices;
 
 namespace TrashCollectorWebApp.Controllers
 {
@@ -86,7 +87,7 @@ namespace TrashCollectorWebApp.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,FirstName,LastName,AddressLineOne,AddressLineTwo,City,USState,ZipCode")] Customer customer)
+        public ActionResult Edit([Bind(Include = "ID,FirstName,LastName,AddressLineOne,AddressLineTwo,City,USState,ZipCode,UserId")] Customer customer)
         {
             if (ModelState.IsValid)
             {
@@ -131,5 +132,30 @@ namespace TrashCollectorWebApp.Controllers
             }
             base.Dispose(disposing);
         }
+
+        public ActionResult MappedLocation(int id)
+        {
+            Customer customer = db.Customers.Where(x => x.ID == id).Select(x => x).First();
+            string addressLineOneFormated = customer.AddressLineOne.Replace(' ', '+');
+            string addressLineTwoFormated = (!string.IsNullOrEmpty(customer.AddressLineTwo)) ? customer.AddressLineTwo.Replace(' ', '+') : null;
+            string streetAddress = (!string.IsNullOrEmpty(addressLineTwoFormated)) ? addressLineOneFormated + "+" + addressLineTwoFormated : addressLineOneFormated;
+            string formattedCity = customer.City.Replace(' ', '+');
+            string formattedAddressComplete = streetAddress + "," + formattedCity + "," + customer.USState + "," + customer.ZipCode.ToString();
+            ViewBag.Key = ApiKey.key;
+            ViewBag.Address = formattedAddressComplete;
+
+            var testAddress = customer.AddressLineOne + " " + ((!string.IsNullOrEmpty(customer.AddressLineTwo)) ? customer.AddressLineTwo + " " : "") + customer.City + ", " + customer.USState + " " + customer.ZipCode;
+            var locationService = new GoogleLocationService();
+            var point = locationService.GetLatLongFromAddress(testAddress);
+            var latitude = point.Latitude;
+            var longitude = point.Longitude;
+            ViewBag.Point = point;
+            ViewBag.Lat = latitude;
+            ViewBag.Long = longitude;
+
+            
+            return View();
+        }
+
     }
 }
