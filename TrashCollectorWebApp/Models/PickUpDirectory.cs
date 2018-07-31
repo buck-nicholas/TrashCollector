@@ -20,5 +20,6 @@ namespace TrashCollectorWebApp.Models
         public Customer Customer { get; set; }
         public string StartDate { get; set; }
         public string EndDate { get; set; }
+        public bool IsActive { get; set; }
     }
 }

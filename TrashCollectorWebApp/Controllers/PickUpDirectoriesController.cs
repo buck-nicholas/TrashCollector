@@ -33,26 +33,43 @@ namespace TrashCollectorWebApp.Controllers
         // GET: PickUpDirectories FOR Employee Role
         public ViewResult ListEmployee(string day)
         {
-            List<string> daysOfWeek = new List<string>() { "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday", "All" };
-            ViewBag.DaysOfWeek = new SelectList(daysOfWeek);
             string userId = User.Identity.GetUserId();
             Employee currentEmployee = db.Employees.Where(x => x.UserId == userId).Select(x => x).FirstOrDefault();
-            var pickUps = db.PickUpDirectories.Where(x => x.Customer.ZipCode == currentEmployee.AssignedZip).Where(x => IsActiveDate(x) == true).Include(t => t.Customer);
-            if (!string.IsNullOrEmpty(day))
+            DateTime today = DateTime.Today;
+            string dayOfWeek = today.DayOfWeek.ToString();
+            List<string> daysOfWeek = new List<string>() { "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday", "All" };
+            ViewBag.DaysOfWeek = new SelectList(daysOfWeek);
+
+            var pickUps = db.PickUpDirectories.Where(x => x.Customer.ZipCode == currentEmployee.AssignedZip).Where(x => x.DayOfWeek == dayOfWeek);
+            if (!string.IsNullOrEmpty(day)) 
             {
-                pickUps = db.PickUpDirectories.Where(x => x.Customer.ZipCode == currentEmployee.AssignedZip && x.DayOfWeek.ToLower() == day.ToLower()).Where(x => IsActiveDate(x) == true).Include(t => t.Customer);
+                if(day.ToLower() == "all")
+                {
+                    pickUps = db.PickUpDirectories.Where(x => x.Customer.ZipCode == currentEmployee.AssignedZip);
+                }
+                else
+                {
+                    pickUps = db.PickUpDirectories.Where(x => x.Customer.ZipCode == currentEmployee.AssignedZip && x.DayOfWeek.ToLower() == day.ToLower());
+                }
             }
+            SetActiveInactiveStatus(pickUps);
+            pickUps = pickUps.Where(x=>x.IsActive == true).Include(t => t.Customer);
             return View(pickUps.ToList());
         }
         public ActionResult ListCustomer()
         {
-            
             string userId = User.Identity.GetUserId();
             Customer currentCustomer = db.Customers.Where(x => x.UserId == userId).Select(x => x).FirstOrDefault();
-            var pickUpDirectories = db.PickUpDirectories.Where(x => x.CustomerID == currentCustomer.ID).Where(x => IsActiveDate(x) == true).Include(t => t.Customer);
+            var pickUpDirectories = db.PickUpDirectories.Where(x => x.CustomerID == currentCustomer.ID).Include(t => t.Customer);
             return View(pickUpDirectories.ToList());
         }
-
+        public void SetActiveInactiveStatus(IEnumerable<PickUpDirectory> directories)
+        {
+            foreach(PickUpDirectory item in directories)
+            {
+                item.IsActive = IsActiveDate(item);
+            }
+        }
         public bool IsActiveDate(PickUpDirectory directory)
         {
             DateTime today = DateTime.Today;

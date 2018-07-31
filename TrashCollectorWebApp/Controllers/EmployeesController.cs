@@ -9,6 +9,8 @@ using System.Web.Mvc;
 using TrashCollectorWebApp.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
+using GoogleMaps.LocationServices;
+
 
 namespace TrashCollectorWebApp.Controllers
 {
@@ -65,9 +67,12 @@ namespace TrashCollectorWebApp.Controllers
         }
 
         // GET: Employees/Edit/5
-        public ActionResult Edit(int? id)
+        public ActionResult Edit()
         {
-            if (id == null)
+            var userID = User.Identity.GetUserId();
+            int? id = (User.IsInRole("Employee")) ? db.Employees.Where(x => x.UserId == userID).Select(x => x.ID).FirstOrDefault() : 0;
+
+            if (id == 0)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
@@ -84,7 +89,7 @@ namespace TrashCollectorWebApp.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,FirstName,LastName")] Employee employee)
+        public ActionResult Edit([Bind(Include = "ID,FirstName,LastName,UserId,AssignedZip")] Employee employee)
         {
             if (ModelState.IsValid)
             {
@@ -128,6 +133,43 @@ namespace TrashCollectorWebApp.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        public ViewResult CustomerLocations(string selectedID)
+        {
+            //var requiredData = db.Customers.Select(x => x);
+            var requiredData =
+                (from x in db.Customers
+                 select new SelectListItem
+                 {
+                     Text = x.FirstName.ToString(),
+                     Value = x.ID.ToString()
+                 });
+            ViewData["CustList"] = requiredData.ToList();
+            //ViewBag.CustomerList = new SelectList(requiredData.ToList());
+
+            if(!string.IsNullOrEmpty(selectedID))
+            {
+                var id = Int32.Parse(selectedID);
+                Customer customer = db.Customers.Where(x => x.ID == id).Select(x => x).First();
+                string addressLineOneFormated = customer.AddressLineOne.Replace(' ', '+');
+                string addressLineTwoFormated = (!string.IsNullOrEmpty(customer.AddressLineTwo)) ? customer.AddressLineTwo.Replace(' ', '+') : null;
+                string streetAddress = (!string.IsNullOrEmpty(addressLineTwoFormated)) ? addressLineOneFormated + "+" + addressLineTwoFormated : addressLineOneFormated;
+                string formattedCity = customer.City.Replace(' ', '+');
+                string formattedAddressComplete = streetAddress + "," + formattedCity + "," + customer.USState + "," + customer.ZipCode.ToString();
+                ViewBag.Key = ApiKey.key;
+                ViewBag.Address = formattedAddressComplete;
+
+                var testAddress = customer.AddressLineOne + " " + ((!string.IsNullOrEmpty(customer.AddressLineTwo)) ? customer.AddressLineTwo + " " : "") + customer.City + ", " + customer.USState + " " + customer.ZipCode;
+                var locationService = new GoogleLocationService();
+                var point = locationService.GetLatLongFromAddress(testAddress);
+                var latitude = point.Latitude;
+                var longitude = point.Longitude;
+                ViewBag.Point = point;
+                ViewBag.Lat = latitude;
+                ViewBag.Long = longitude;
+            }
+            return View();
         }
     }
 }

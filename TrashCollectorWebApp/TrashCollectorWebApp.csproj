@@ -245,6 +245,10 @@
     <Compile Include="Migrations\201807301241337_AddedStartAndEndDateToPickUpTable.Designer.cs">
       <DependentUpon>201807301241337_AddedStartAndEndDateToPickUpTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201807311220103_AddedIsActivePropToPickUpDirectory.cs" />
+    <Compile Include="Migrations\201807311220103_AddedIsActivePropToPickUpDirectory.Designer.cs">
+      <DependentUpon>201807311220103_AddedIsActivePropToPickUpDirectory.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Customer.cs" />
@@ -339,6 +343,7 @@
     <Content Include="Views\PickUpDirectories\ListCustomer.cshtml" />
     <Content Include="Views\PickUpDirectories\ListEmployee.cshtml" />
     <Content Include="Views\Customers\MappedLocation.cshtml" />
+    <Content Include="Views\Employees\CustomerLocations.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -383,6 +388,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201807301241337_AddedStartAndEndDateToPickUpTable.resx">
       <DependentUpon>201807301241337_AddedStartAndEndDateToPickUpTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201807311220103_AddedIsActivePropToPickUpDirectory.resx">
+      <DependentUpon>201807311220103_AddedIsActivePropToPickUpDirectory.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

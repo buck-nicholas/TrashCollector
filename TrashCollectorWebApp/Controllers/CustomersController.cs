@@ -68,9 +68,12 @@ namespace TrashCollectorWebApp.Controllers
         }
 
         // GET: Customers/Edit/5
-        public ActionResult Edit(int? id)
+        public ActionResult Edit()
         {
-            if (id == null)
+            var userID = User.Identity.GetUserId();
+            int? id = (User.IsInRole("Customer")) ? db.Customers.Where(x => x.UserId == userID).Select(x => x.ID).FirstOrDefault() : 0;
+
+            if (id == 0)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
@@ -153,7 +156,6 @@ namespace TrashCollectorWebApp.Controllers
             ViewBag.Lat = latitude;
             ViewBag.Long = longitude;
 
-            
             return View();
         }
 

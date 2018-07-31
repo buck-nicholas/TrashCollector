@@ -10,6 +10,10 @@ namespace TrashCollectorWebApp.Controllers
     {
         public ActionResult Index()
         {
+            if (User.IsInRole("Employee"))
+            {
+                return RedirectToAction("ListEmployee", "PickUpDirectories");
+            }
             return View();
         }
 

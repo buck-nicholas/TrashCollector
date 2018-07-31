@@ -1,5 +1,19 @@
 ﻿@model TrashCollectorWebApp.Models.Customer
 
+@{
+    ViewBag.Title = "CustomerLocations";
+}
+
+<h2>Customer Locations</h2>
+
+@using (Html.BeginForm())
+{
+<p>
+    Find by name: @Html.DropDownList("selectedID", (IEnumerable<SelectListItem>)ViewData["CustList"])
+    <input type="submit" value="Search" />
+</p>
+}
+
 @*<iframe width="450"
     height="250"
     frameborder="0" style="border:0"

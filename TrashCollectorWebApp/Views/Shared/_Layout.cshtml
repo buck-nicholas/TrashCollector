@@ -22,8 +22,33 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    @if (User.IsInRole("Customer") || User.IsInRole("Employee"))
+                    {
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id="navbardrop">System Actions</a>
+                            @if (User.IsInRole("Employee"))
+                            {
+                            <div class="dropdown-menu">
+                                @Html.ActionLink("Manage Account Settings", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+                                @Html.ActionLink("Manage Account Information", "Edit", "Employees")
+                                @Html.ActionLink("View PickUps", "Index", "PickUpDirectories")
+                                @Html.ActionLink("Customer Locations", "CustomerLocations", "Employees")
+                                @*@Html.ActionLink("Set Pick Up Date", "Create", "PickUpDirectories")*@
+                                @*@Html.ActionLink("View Pending Transactions", "Index", "Transactions")*@
+                            </div>
+                            }
+                            @if (User.IsInRole("Customer"))
+                            {
+                            <div class="dropdown-menu">
+                                @Html.ActionLink("Manage Account Settings", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+                                @Html.ActionLink("Manage Account Information", "Edit", "Customers")
+                                @Html.ActionLink("View PickUps", "Index", "PickUpDirectories")
+                                @Html.ActionLink("Set Pick Up Date", "Create", "PickUpDirectories")
+                                @Html.ActionLink("View Pending Transactions", "Index", "Transactions")
+                            </div>
+                            }
+                        </li>
+                    }
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
