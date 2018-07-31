@@ -3,6 +3,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Owin;
 using TrashCollectorWebApp.Models;
+using Stripe;
 
 [assembly: OwinStartupAttribute(typeof(TrashCollectorWebApp.Startup))]
 namespace TrashCollectorWebApp
@@ -13,6 +14,7 @@ namespace TrashCollectorWebApp
         {
             ConfigureAuth(app);
             CreateRolesAndUsers();
+            StripeConfiguration.SetApiKey(ApiKey.STRIPE_SECRET);
         }
         private void CreateRolesAndUsers()
         {
