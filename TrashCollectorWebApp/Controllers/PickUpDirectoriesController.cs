@@ -40,7 +40,7 @@ namespace TrashCollectorWebApp.Controllers
             List<string> daysOfWeek = new List<string>() { "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday", "All" };
             ViewBag.DaysOfWeek = new SelectList(daysOfWeek);
 
-            var pickUps = db.PickUpDirectories.Where(x => x.Customer.ZipCode == currentEmployee.AssignedZip).Where(x => x.DayOfWeek == dayOfWeek);
+            var pickUps = db.PickUpDirectories.Where(x => x.Customer.ZipCode == currentEmployee.AssignedZip).Where(x => x.DayOfWeek == dayOfWeek).Select(x=>x);
             if (!string.IsNullOrEmpty(day)) 
             {
                 if(day.ToLower() == "all")
@@ -52,7 +52,7 @@ namespace TrashCollectorWebApp.Controllers
                     pickUps = db.PickUpDirectories.Where(x => x.Customer.ZipCode == currentEmployee.AssignedZip && x.DayOfWeek.ToLower() == day.ToLower());
                 }
             }
-            SetActiveInactiveStatus(pickUps);
+            SetActiveInactiveStatus(pickUps.ToList());
             pickUps = pickUps.Where(x=>x.IsActive == true).Include(t => t.Customer);
             return View(pickUps.ToList());
         }
@@ -63,11 +63,12 @@ namespace TrashCollectorWebApp.Controllers
             var pickUpDirectories = db.PickUpDirectories.Where(x => x.CustomerID == currentCustomer.ID).Include(t => t.Customer);
             return View(pickUpDirectories.ToList());
         }
-        public void SetActiveInactiveStatus(IEnumerable<PickUpDirectory> directories)
+        public void SetActiveInactiveStatus(List<PickUpDirectory> directories)
         {
             foreach(PickUpDirectory item in directories)
             {
                 item.IsActive = IsActiveDate(item);
+                db.SaveChanges();
             }
         }
         public bool IsActiveDate(PickUpDirectory directory)

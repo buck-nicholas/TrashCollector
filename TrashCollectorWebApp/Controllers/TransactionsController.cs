@@ -20,8 +20,15 @@ namespace TrashCollectorWebApp.Controllers
         {
             string userId = User.Identity.GetUserId();
             Customer currentCustomer = db.Customers.Where(x => x.UserId == userId).Select(x => x).FirstOrDefault();
-            var AmountOwed = db.Transactions.Where(x => x.PickUp.CustomerID == currentCustomer.ID && !x.TransactionCompleted).Select(x => x.Amount).Sum();
-            return AmountOwed;
+            if (db.Transactions.Where(x=>x.PickUp.CustomerID == currentCustomer.ID).Select(x=>x).Count() > 0)
+            {
+                var AmountOwed = db.Transactions.Where(x => x.PickUp.CustomerID == currentCustomer.ID && !x.TransactionCompleted).Select(x => x.Amount).Sum();
+                return AmountOwed;
+            }
+            else
+            {
+                return 0;
+            }
         }
 
         // GET: Transactions
