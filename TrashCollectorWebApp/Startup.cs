@@ -5,6 +5,7 @@ using Owin;
 using TrashCollectorWebApp.Models;
 using Stripe;
 
+
 [assembly: OwinStartupAttribute(typeof(TrashCollectorWebApp.Startup))]
 namespace TrashCollectorWebApp
 {

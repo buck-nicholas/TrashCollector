@@ -9,6 +9,8 @@ using System.Web.Mvc;
 using TrashCollectorWebApp.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
+using Stripe;
+using System.Configuration;
 
 namespace TrashCollectorWebApp.Controllers
 {
@@ -149,5 +151,35 @@ namespace TrashCollectorWebApp.Controllers
             }
             base.Dispose(disposing);
         }
+        public ActionResult Charge(string stripeEmail, string stripeToken)
+        {
+            var customers = new StripeCustomerService();
+            var charges = new StripeChargeService();
+
+            var customer = customers.Create(new StripeCustomerCreateOptions
+            {
+                Email = stripeEmail,
+                SourceToken = stripeToken
+            });
+
+            var charge = charges.Create(new StripeChargeCreateOptions
+            {
+                Amount = 500,//charge in cents
+                Description = "Sample Charge",
+                Currency = "usd",
+                CustomerId = customer.Id
+            });
+
+            // further application specific code goes here
+
+            return View();
+        }
+        public ActionResult VOne()
+        {
+            var stripePublishKey = ApiKey.STRIPE_PUBLISHABLE;
+            ViewBag.StripePublishKey = stripePublishKey;
+            return View();
+        }
+
     }
 }

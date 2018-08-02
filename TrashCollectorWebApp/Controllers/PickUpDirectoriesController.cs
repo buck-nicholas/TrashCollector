@@ -37,8 +37,12 @@ namespace TrashCollectorWebApp.Controllers
             Employee currentEmployee = db.Employees.Where(x => x.UserId == userId).Select(x => x).FirstOrDefault();
             DateTime today = DateTime.Today;
             string dayOfWeek = today.DayOfWeek.ToString();
-            List<string> daysOfWeek = new List<string>() { "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday", "All" };
+            List<string> daysOfWeek = new List<string>() { "Today", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday", "All" };
             ViewBag.DaysOfWeek = new SelectList(daysOfWeek);
+            if(day == "Today")
+            {
+                day = dayOfWeek;
+            }
 
             var pickUps = db.PickUpDirectories.Where(x => x.Customer.ZipCode == currentEmployee.AssignedZip).Where(x => x.DayOfWeek == dayOfWeek).Select(x=>x);
             if (!string.IsNullOrEmpty(day)) 
@@ -78,7 +82,11 @@ namespace TrashCollectorWebApp.Controllers
             int[] dtFormatted = dtString.Split('/').Select(x => Int32.Parse(x)).ToArray();
             int[] startDateDtFormatted = directory.StartDate.Split('/').Select(x => Int32.Parse(x)).ToArray();
             int[] EndDateDtFormatted = directory.EndDate.Split('/').Select(x => Int32.Parse(x)).ToArray();
-            bool isActive = (dtFormatted[0] >= startDateDtFormatted[0] && dtFormatted[0] <= EndDateDtFormatted[0] && dtFormatted[1] >= startDateDtFormatted[1] && dtFormatted[1] <= EndDateDtFormatted[1] && dtFormatted[2] >= startDateDtFormatted[2] && dtFormatted[2] <= EndDateDtFormatted[2]) ? true : false;
+            bool isActive = (dtFormatted[0] >= startDateDtFormatted[0] && dtFormatted[0] <= EndDateDtFormatted[0] && dtFormatted[2] >= startDateDtFormatted[2] && dtFormatted[2] <= EndDateDtFormatted[2]) ? true : false;
+            if(dtFormatted[0] == EndDateDtFormatted[0])
+            {
+                isActive = (dtFormatted[1] <= EndDateDtFormatted[1] && dtFormatted[1] >= startDateDtFormatted[1] && isActive == true) ? true : false;
+            }
             return isActive;
         }
 

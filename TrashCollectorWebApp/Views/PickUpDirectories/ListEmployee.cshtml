@@ -21,6 +21,11 @@
         <th>
             @Html.DisplayNameFor(model => model.Customer.FirstName)
         </th>
+        <th>@Html.DisplayNameFor(model => model.Customer.AddressLineOne)</th>
+        <th>@Html.DisplayNameFor(model => model.Customer.AddressLineTwo)</th>
+        <th>@Html.DisplayNameFor(model => model.Customer.City)</th>
+        <th>@Html.DisplayNameFor(model => model.Customer.USState)</th>
+        <th>@Html.DisplayNameFor(model => model.Customer.ZipCode)</th>
         <th>
             @Html.DisplayNameFor(model => model.DayOfWeek)
         </th>
@@ -38,28 +43,44 @@
 
     @foreach (var item in Model)
     {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Customer.FirstName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DayOfWeek)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SpecialPickUp)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SpecialDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PickUpCompleted)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
-                @Html.ActionLink("Details", "Details", new { id = item.ID }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.ID })
-            </td>
-        </tr>
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Customer.FirstName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Customer.AddressLineOne)
+
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Customer.AddressLineTwo)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Customer.City)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Customer.USState)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Customer.ZipCode)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DayOfWeek)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SpecialPickUp)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SpecialDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PickUpCompleted)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
+            @Html.ActionLink("Details", "Details", new { id = item.ID }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+        </td>
+    </tr>
     }
 
 </table>
